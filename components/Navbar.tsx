@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { profile } from "@/data/resume";
+import Logo from "./Logo";
 
 const links = [
   { id: "about", label: "About" },
@@ -50,12 +51,7 @@ export default function Navbar() {
           scrolled ? "glass shadow-2xl shadow-orange/10 backdrop-blur-xl backdrop-saturate-150" : "border border-transparent"
         }`}
       >
-        <a href="#top" className="flex items-center gap-2.5 pl-1" aria-label="Back to top">
-          <span className="relative grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-orange via-orange-hover to-[#ffb37a] text-sm font-bold text-white shadow-[0_6px_18px_-6px_rgba(255,91,15,0.9)]">
-            AA
-          </span>
-          <span className="hidden text-lg font-semibold text-white sm:block">Abdullah</span>
-        </a>
+        <Logo className="pl-2" />
 
         <ul className="hidden items-center gap-1 md:flex">
           {links.map((l) => (
