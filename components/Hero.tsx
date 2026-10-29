@@ -28,7 +28,7 @@ export default function Hero() {
         initial={{ scaleY: 0 }}
         animate={{ scaleY: 1 }}
         transition={{ duration: 1, ease }}
-        className="absolute left-0 top-0 hidden h-[78%] w-[9%] origin-top bg-orange lg:block"
+        className="absolute left-0 top-0 hidden h-[78%] w-[9%] origin-top bg-orange xl:block"
       />
 
       <div className="relative mx-auto grid min-h-[100svh] max-w-6xl items-center gap-10 px-4 pb-24 pt-28 sm:px-6 lg:grid-cols-2 lg:pt-24">

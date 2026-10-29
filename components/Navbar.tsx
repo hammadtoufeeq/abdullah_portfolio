@@ -39,6 +39,19 @@ export default function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const onResize = () => desktop.matches && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    desktop.addEventListener("change", onResize);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      desktop.removeEventListener("change", onResize);
+    };
+  }, [open]);
+
   return (
     <motion.header
       initial={{ y: -100, opacity: 0 }}
@@ -53,7 +66,7 @@ export default function Navbar() {
       >
         <Logo className="pl-2" />
 
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center gap-1 lg:flex">
           {links.map((l) => (
             <li key={l.id}>
               <a
@@ -86,7 +99,7 @@ export default function Navbar() {
           </a>
           <button
             onClick={() => setOpen((o) => !o)}
-            className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 md:hidden"
+            className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 lg:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
           >
@@ -105,26 +118,28 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -12, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.97 }}
-            className="glass mx-auto mt-2 max-w-5xl rounded-3xl p-3 backdrop-blur-xl backdrop-saturate-150 md:hidden"
+            className="glass mx-auto mt-2 max-w-5xl rounded-3xl p-3 backdrop-blur-xl backdrop-saturate-150 lg:hidden"
           >
-            {links.map((l, i) => (
-              <motion.a
-                key={l.id}
-                href={`#${l.id}`}
-                onClick={() => setOpen(false)}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.04 }}
-                className={`block rounded-2xl px-4 py-3 text-base font-medium ${active === l.id ? "bg-orange/15 text-white ring-1 ring-orange/30" : "text-white/70"}`}
-              >
-                {l.label}
-              </motion.a>
-            ))}
+            <div className="grid gap-1 sm:grid-cols-2">
+              {links.map((l, i) => (
+                <motion.a
+                  key={l.id}
+                  href={`#${l.id}`}
+                  onClick={() => setOpen(false)}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.04 }}
+                  className={`block rounded-2xl px-4 py-3 text-base font-medium ${active === l.id ? "bg-orange/15 text-white ring-1 ring-orange/30" : "text-white/70"}`}
+                >
+                  {l.label}
+                </motion.a>
+              ))}
+            </div>
             <a
               href={profile.resume}
               target="_blank"
               rel="noreferrer"
-              className="mt-2 block rounded-2xl bg-orange px-4 py-3 text-center font-semibold text-white"
+              className="mt-2 block rounded-2xl bg-orange px-4 py-3 text-center font-semibold text-white sm:hidden"
             >
               Resume
             </a>
