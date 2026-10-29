@@ -3,8 +3,10 @@ import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import {
   faAws, faCss3Alt, faFigma, faGitAlt, faHtml5, faJs, faNodeJs, faPhp, faPython, faReact,
 } from "@fortawesome/free-brands-svg-icons";
+import { faBitcoin } from "@fortawesome/free-brands-svg-icons";
 import {
-  faC, faCloud, faCode, faDatabase, faLayerGroup, faPalette, faPaperPlane, faServer, faTerminal, faWind,
+  faAddressBook, faBullhorn, faC, faChartLine, faCloud, faCode, faDatabase, faDumbbell, faFileLines, faLayerGroup,
+  faMobileScreen, faPalette, faPaperPlane, faRobot, faSchool, faServer, faTerminal, faWind, faWrench,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const profile = {
@@ -18,6 +20,9 @@ export const profile = {
   linkedin: "https://www.linkedin.com/",
   github: "https://github.com/",
   resume: "/Abdullah_Azhar_Resume.pdf",
+  // Put a photo in /public (e.g. /public/abdullah.jpg) and set its path here to show it in the hero
+  photo: "",
+  yearsExperience: 2,
   tagline:
     "I build fast, responsive full-stack web apps — from AI-powered chatbots to CRM systems — with clean, maintainable code.",
   summary:
@@ -82,6 +87,7 @@ export type Project = {
   title: string;
   type: string;
   category: ProjectCategory;
+  icon: IconDefinition;
   description: string;
   tech: string[];
   featured?: boolean;
@@ -93,6 +99,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     title: "AI Resume Analyzer",
+    icon: faFileLines,
     category: "AI",
     type: "AI / Full Stack",
     description:
@@ -102,6 +109,7 @@ export const projects: Project[] = [
   },
   {
     title: "Influence Platform",
+    icon: faBullhorn,
     category: "Full Stack",
     type: "MERN",
     description:
@@ -111,6 +119,7 @@ export const projects: Project[] = [
   },
   {
     title: "DataTrain Visualization",
+    icon: faChartLine,
     category: "AI",
     type: "Data / Full Stack",
     description:
@@ -120,6 +129,7 @@ export const projects: Project[] = [
   },
   {
     title: "Crypto Prices Web App",
+    icon: faBitcoin,
     category: "Full Stack",
     type: "MERN",
     description:
@@ -128,6 +138,7 @@ export const projects: Project[] = [
   },
   {
     title: "School Management System",
+    icon: faSchool,
     category: "Full Stack",
     type: "MERN",
     description:
@@ -136,6 +147,7 @@ export const projects: Project[] = [
   },
   {
     title: "Gym Management System",
+    icon: faDumbbell,
     category: "Frontend",
     type: "MERN – Frontend",
     description:
@@ -144,6 +156,7 @@ export const projects: Project[] = [
   },
   {
     title: "Mechanic Service App",
+    icon: faWrench,
     category: "Frontend",
     type: "MERN – Frontend",
     description:
@@ -212,6 +225,23 @@ export const skills: { group: string; icon: IconDefinition; items: Skill[] }[] =
       { name: "Canva", icon: faPalette },
     ],
   },
+];
+
+export const services: { title: string; text: string; icon: IconDefinition }[] = [
+  { title: "Full Stack Development", text: "End-to-end MERN & Next.js web apps — from database design to deployment.", icon: faLayerGroup },
+  { title: "Frontend Development", text: "Responsive, accessible UIs with React.js, Next.js and Tailwind CSS.", icon: faCode },
+  { title: "Backend & REST APIs", text: "Secure Node.js / Express APIs with authentication and MongoDB.", icon: faServer },
+  { title: "AI Chatbot Integration", text: "AI-powered customer-support chatbots integrated into client websites.", icon: faRobot },
+  { title: "CRM Systems", text: "Custom CRM dashboards to manage leads and customer data.", icon: faAddressBook },
+  { title: "Responsive UI Design", text: "Pixel-perfect layouts from Figma designs that work on every screen.", icon: faMobileScreen },
+];
+
+// Self-assessed proficiency shown as progress bars — adjust freely
+export const skillLevels: { name: string; level: number }[] = [
+  { name: "React.js / Next.js", level: 90 },
+  { name: "Node.js / Express.js", level: 85 },
+  { name: "MongoDB", level: 85 },
+  { name: "JavaScript / TypeScript", level: 88 },
 ];
 
 export const certifications: { title: string; issuer: string }[] = [

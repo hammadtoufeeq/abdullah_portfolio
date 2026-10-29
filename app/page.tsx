@@ -1,14 +1,15 @@
 import ScrollProgress from "@/components/ScrollProgress";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import TechStrip from "@/components/TechStrip";
 import About from "@/components/About";
+import Services from "@/components/Services";
+import Stats from "@/components/Stats";
+import Portfolio from "@/components/Portfolio";
 import Experience from "@/components/Experience";
-import Projects from "@/components/Projects";
-import Skills from "@/components/Skills";
-import Credentials from "@/components/Credentials";
+import HireBanner from "@/components/HireBanner";
+import Certifications from "@/components/Certifications";
 import Contact from "@/components/Contact";
-import StatusBar from "@/components/StatusBar";
+import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 
 export default function Home() {
@@ -18,15 +19,16 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <TechStrip />
         <About />
+        <Services />
+        <Stats />
+        <Portfolio />
         <Experience />
-        <Projects />
-        <Skills />
-        <Credentials />
+        <HireBanner />
+        <Certifications />
         <Contact />
       </main>
-      <StatusBar />
+      <Footer />
       <BackToTop />
     </>
   );

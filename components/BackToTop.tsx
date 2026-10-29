@@ -24,7 +24,7 @@ export default function BackToTop() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
           whileHover={{ y: -4 }}
-          className="fixed bottom-12 right-5 z-50 flex h-11 w-11 items-center justify-center rounded-lg border border-mint/40 bg-surface text-mint shadow-[0_0_24px_-6px_rgba(46,230,166,0.6)] transition-colors hover:bg-mint hover:text-bg-deep"
+          className="fixed bottom-6 right-5 z-50 flex h-11 w-11 items-center justify-center rounded-md bg-orange text-white shadow-[0_10px_30px_-8px_rgba(255,91,15,0.8)] transition-colors hover:bg-orange-hover"
         >
           <FontAwesomeIcon icon={faArrowUp} />
         </motion.a>

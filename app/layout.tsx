@@ -1,16 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { profile } from "@/data/resume";
 import Providers from "@/components/Providers";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
+const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"], variable: "--font-poppins" });
 
 export const metadata: Metadata = {
   title: `${profile.name} — ${profile.role}`,
   description: `${profile.name} is a ${profile.role} (${profile.stack}) based in ${profile.location}. ${profile.tagline}`,
-  keywords: ["Abdullah Azhar", "Full Stack Developer", "Software Developer", "MERN", "Next.js", "React", "Node.js", "Lahore"],
+  keywords: ["Abdullah Azhar", "Full Stack Developer", "Web Developer", "MERN", "Next.js", "React", "Node.js", "Lahore"],
   openGraph: {
     title: `${profile.name} — ${profile.role}`,
     description: profile.tagline,
@@ -19,12 +18,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08120f",
+  themeColor: "#0a0a0a",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={poppins.variable}>
       <body className="font-sans">
         <Providers>{children}</Providers>
       </body>

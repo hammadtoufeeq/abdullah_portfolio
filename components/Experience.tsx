@@ -1,73 +1,111 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCodeCommit } from "@fortawesome/free-solid-svg-icons";
+import { faBriefcase, faCheck, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { experience } from "@/data/resume";
-import SectionHeading from "./SectionHeading";
+import FadeIn from "./FadeIn";
+import SectionTitle from "./SectionTitle";
 
-// Stable fake short hash per company, purely decorative
-const hash = (s: string) => {
-  let h = 2166136261;
-  for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
-  return (h >>> 0).toString(16).padStart(7, "0").slice(0, 7);
-};
-
+// Testimonial-style slider from the reference, used for work experience
 export default function Experience() {
+  const [[index, dir], setState] = useState<[number, number]>([0, 1]);
+  const [paused, setPaused] = useState(false);
+  const n = experience.length;
+  const go = (d: number) => setState(([i]) => [(i + d + n) % n, d]);
+
+  useEffect(() => {
+    if (paused) return;
+    const t = setInterval(() => setState(([i]) => [(i + 1) % n, 1]), 6000);
+    return () => clearInterval(t);
+  }, [paused, n]);
+
+  const job = experience[index];
+  const prev = experience[(index - 1 + n) % n];
+  const next = experience[(index + 1) % n];
+
   return (
-    <section id="experience" className="border-y border-line bg-bg-deep">
-      <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32">
-        <SectionHeading index="02" file="experience" title="git log --career" />
+    <section id="experience" className="overflow-hidden bg-bg-2 py-24 sm:py-32">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionTitle title="Work Experience" text="Where I've been building, shipping and learning — from internships to client projects." />
 
-        <ol className="relative">
-          {/* branch line */}
-          <motion.span
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.4, ease: "easeInOut" }}
-            className="absolute bottom-4 left-[15px] top-4 w-0.5 origin-top bg-gradient-to-b from-mint via-line to-line"
-          />
-          {experience.map((job, i) => (
-            <motion.li
-              key={job.company}
-              initial={{ opacity: 0, x: -24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: i * 0.08 }}
-              className="relative pb-10 pl-12 last:pb-0"
-            >
-              <span
-                className={`absolute left-0 top-1 flex h-8 w-8 items-center justify-center rounded-full border-2 bg-bg-deep ${
-                  job.current ? "border-mint text-mint shadow-[0_0_16px_-2px_#2ee6a6]" : "border-line text-muted"
-                }`}
+        <FadeIn>
+          <div className="relative" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+            {/* faded side cards (desktop) */}
+            {[prev, next].map((j, side) => (
+              <div
+                key={side}
+                className={`absolute top-1/2 hidden w-[24%] -translate-y-1/2 rounded-sm bg-card p-6 opacity-40 ring-1 ring-line lg:block ${side === 0 ? "-left-[6%]" : "-right-[6%]"}`}
               >
-                <FontAwesomeIcon icon={faCodeCommit} className="h-3.5 w-3.5" />
-              </span>
-
-              <div className="group rounded-xl border border-line bg-surface p-6 transition-all duration-300 hover:border-mint/50 hover:shadow-[0_0_40px_-20px_#2ee6a6]">
-                <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
-                  <span className="text-mint">commit {hash(job.company)}</span>
-                  {job.current && (
-                    <span className="rounded border border-mint/40 bg-mint/10 px-2 py-0.5 text-mint">HEAD -&gt; main</span>
-                  )}
-                  <span className="text-muted">{job.period}</span>
-                </p>
-                <h3 className="mt-3 text-xl font-semibold">
-                  {job.role} <span className="font-mono text-mint">@{job.company}</span>
-                </h3>
-                <ul className="mt-4 space-y-2 font-mono text-sm">
-                  {job.points.map((p) => (
-                    <li key={p} className="flex gap-3 text-muted">
-                      <span className="text-mint">+</span>
-                      <span className="leading-relaxed">{p}</span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-sm font-semibold">{j.role}</p>
+                <p className="mt-1 text-xs text-orange">{j.company}</p>
+                <p className="mt-3 line-clamp-3 text-xs text-muted">{j.points[0]}</p>
               </div>
-            </motion.li>
-          ))}
-        </ol>
+            ))}
+
+            <div className="relative mx-auto max-w-2xl">
+              <div className="relative z-10 mx-auto -mb-10 flex h-20 w-20 items-center justify-center rounded-full border-4 border-bg-2 bg-orange text-white shadow-[0_10px_30px_-8px_rgba(255,91,15,0.9)]">
+                <FontAwesomeIcon icon={faBriefcase} className="h-7 w-7" />
+              </div>
+              <div className="relative min-h-[330px] overflow-hidden rounded-sm bg-card px-6 pb-8 pt-16 text-center ring-1 ring-line sm:px-10">
+                <AnimatePresence mode="wait" custom={dir}>
+                  <motion.div
+                    key={job.company}
+                    custom={dir}
+                    initial={{ opacity: 0, x: dir * 60 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: dir * -60 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                  >
+                    <p className="text-lg font-semibold text-orange">{job.company}</p>
+                    <p className="mt-1 text-sm font-medium">{job.role}</p>
+                    <p className="mt-1 text-xs text-muted">
+                      {job.period}
+                      {job.current && <span className="ml-2 rounded-sm bg-orange px-2 py-0.5 text-[10px] font-semibold uppercase text-white">Current</span>}
+                    </p>
+                    <ul className="mx-auto mt-6 max-w-lg space-y-3 text-left text-sm leading-relaxed text-muted">
+                      {job.points.map((p) => (
+                        <li key={p} className="flex gap-3">
+                          <FontAwesomeIcon icon={faCheck} className="mt-1 h-3.5 w-3.5 shrink-0 text-orange" />
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* controls */}
+            <div className="mt-8 flex items-center justify-center gap-5">
+              <button
+                onClick={() => go(-1)}
+                aria-label="Previous"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-line text-white transition-colors hover:border-orange hover:bg-orange"
+              >
+                <FontAwesomeIcon icon={faChevronLeft} className="h-3.5 w-3.5" />
+              </button>
+              <div className="flex gap-2">
+                {experience.map((e, i) => (
+                  <button
+                    key={e.company}
+                    onClick={() => setState([i, i > index ? 1 : -1])}
+                    aria-label={`Show ${e.company}`}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-8 bg-orange" : "w-4 bg-white/30 hover:bg-white/60"}`}
+                  />
+                ))}
+              </div>
+              <button
+                onClick={() => go(1)}
+                aria-label="Next"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-line text-white transition-colors hover:border-orange hover:bg-orange"
+              >
+                <FontAwesomeIcon icon={faChevronRight} className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
