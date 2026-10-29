@@ -2,8 +2,10 @@
 
 Personal portfolio for **Abdullah Azhar**, Full Stack Developer (MERN / Next.js).
 
-Built with **Next.js (App Router)**, **TypeScript** and **Tailwind CSS v4**, using a two-tone
-**Midnight navy `#0B1120` + Electric cyan `#22D3EE`** palette.
+Built with **Next.js (App Router)**, **TypeScript**, **Tailwind CSS v4**, **Motion** (animations)
+and **Font Awesome** icons, using a two-tone **Terracotta `#B5472B` + Sand `#F3E3C3`** palette.
+
+Theme colors are defined once in [`app/globals.css`](app/globals.css) under `@theme`.
 
 ## Getting started
 

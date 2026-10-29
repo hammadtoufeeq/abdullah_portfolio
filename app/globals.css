@@ -1,55 +1,69 @@
 @import "tailwindcss";
+/* Layered so Tailwind size utilities (h-5, w-5…) can override Font Awesome defaults */
+@import "@fortawesome/fontawesome-svg-core/styles.css" layer(base);
 
-/* Two-tone palette: Midnight navy + Electric cyan */
+/* Two-tone palette: Terracotta #B5472B + Sand #F3E3C3 (plus tints/shades of each) */
 @theme {
-  --color-ink: #0b1120;
-  --color-ink-2: #111a2e;
-  --color-ink-3: #1a2540;
-  --color-line: #22304f;
-  --color-fg: #e6edf7;
-  --color-muted: #8b9ab5;
-  --color-accent: #22d3ee;
-  --color-accent-dim: #0e7490;
+  --color-terra: #b5472b;
+  --color-terra-deep: #8e3720;
+  --color-terra-soft: #d9826a;
+  --color-sand: #f3e3c3;
+  --color-sand-light: #faf1df;
+  --color-sand-dark: #e5cc9f;
+  --color-ink: #3a1a10;
+  --color-ink-soft: #6e4434;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-spin-slow: spin 18s linear infinite;
+  --animate-float: float 5s ease-in-out infinite;
+  --animate-blink: blink 1s step-end infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 6rem;
 }
 
 body {
-  background: var(--color-ink);
-  color: var(--color-fg);
+  background: var(--color-sand);
+  color: var(--color-ink);
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-ink);
+  background: var(--color-terra);
+  color: var(--color-sand);
 }
 
-.grid-bg {
-  background-image:
-    linear-gradient(to right, rgb(34 211 238 / 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(34 211 238 / 0.06) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
+/* Subtle paper grain on the sand background */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .animate-marquee, .animate-spin-slow, .animate-float { animation: none; }
 }

@@ -1,4 +1,11 @@
 // All portfolio content lives here — edit this file to update the site.
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import {
+  faAws, faCss3Alt, faFigma, faGitAlt, faHtml5, faJs, faNodeJs, faPhp, faPython, faReact,
+} from "@fortawesome/free-brands-svg-icons";
+import {
+  faC, faCloud, faCode, faDatabase, faLayerGroup, faPalette, faPaperPlane, faServer, faTerminal, faWind,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const profile = {
   name: "Abdullah Azhar",
@@ -69,9 +76,12 @@ export const experience: Experience[] = [
   },
 ];
 
+export type ProjectCategory = "AI" | "Full Stack" | "Frontend";
+
 export type Project = {
   title: string;
   type: string;
+  category: ProjectCategory;
   description: string;
   tech: string[];
   featured?: boolean;
@@ -83,6 +93,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     title: "AI Resume Analyzer",
+    category: "AI",
     type: "AI / Full Stack",
     description:
       "Analyzes resumes against job descriptions using SBERT semantic embeddings to score fit and highlight missing skills.",
@@ -91,6 +102,7 @@ export const projects: Project[] = [
   },
   {
     title: "Influence Platform",
+    category: "Full Stack",
     type: "MERN",
     description:
       "A platform connecting brands with influencers, with campaign listings, profiles and a full Express/MongoDB backend.",
@@ -99,6 +111,7 @@ export const projects: Project[] = [
   },
   {
     title: "DataTrain Visualization",
+    category: "AI",
     type: "Data / Full Stack",
     description:
       "Interactive dashboard for visualizing training data, combining a Flask processing service with a MERN front end.",
@@ -107,6 +120,7 @@ export const projects: Project[] = [
   },
   {
     title: "Crypto Prices Web App",
+    category: "Full Stack",
     type: "MERN",
     description:
       "Live cryptocurrency price tracker with market data, search and user authentication.",
@@ -114,6 +128,7 @@ export const projects: Project[] = [
   },
   {
     title: "School Management System",
+    category: "Full Stack",
     type: "MERN",
     description:
       "Manages students, teachers, classes and attendance with role-based dashboards.",
@@ -121,6 +136,7 @@ export const projects: Project[] = [
   },
   {
     title: "Gym Management System",
+    category: "Frontend",
     type: "MERN – Frontend",
     description:
       "Front end for managing gym members, memberships, trainers and schedules.",
@@ -128,6 +144,7 @@ export const projects: Project[] = [
   },
   {
     title: "Mechanic Service App",
+    category: "Frontend",
     type: "MERN – Frontend",
     description:
       "Lets customers browse services and book mechanics, with a clean responsive UI.",
@@ -135,13 +152,66 @@ export const projects: Project[] = [
   },
 ];
 
-export const skills: { group: string; icon: string; items: string[] }[] = [
-  { group: "Frontend", icon: "code", items: ["HTML5", "CSS3", "JavaScript", "TypeScript", "React.js", "Next.js", "Tailwind CSS"] },
-  { group: "Backend", icon: "server", items: ["Node.js", "Express.js", "Flask", "PHP (basic)"] },
-  { group: "Databases", icon: "database", items: ["MongoDB", "MySQL"] },
-  { group: "Languages", icon: "terminal", items: ["JavaScript", "Python", "C++"] },
-  { group: "Cloud & Tools", icon: "cloud", items: ["AWS Cloud Foundations", "Git", "Postman"] },
-  { group: "Design", icon: "palette", items: ["Figma", "Canva"] },
+export type Skill = { name: string; icon: IconDefinition };
+
+export const skills: { group: string; icon: IconDefinition; items: Skill[] }[] = [
+  {
+    group: "Frontend",
+    icon: faCode,
+    items: [
+      { name: "HTML5", icon: faHtml5 },
+      { name: "CSS3", icon: faCss3Alt },
+      { name: "JavaScript", icon: faJs },
+      { name: "TypeScript", icon: faCode },
+      { name: "React.js", icon: faReact },
+      { name: "Next.js", icon: faLayerGroup },
+      { name: "Tailwind CSS", icon: faWind },
+    ],
+  },
+  {
+    group: "Backend",
+    icon: faServer,
+    items: [
+      { name: "Node.js", icon: faNodeJs },
+      { name: "Express.js", icon: faServer },
+      { name: "Flask", icon: faPython },
+      { name: "PHP (basic)", icon: faPhp },
+    ],
+  },
+  {
+    group: "Databases",
+    icon: faDatabase,
+    items: [
+      { name: "MongoDB", icon: faDatabase },
+      { name: "MySQL", icon: faDatabase },
+    ],
+  },
+  {
+    group: "Languages",
+    icon: faTerminal,
+    items: [
+      { name: "JavaScript", icon: faJs },
+      { name: "Python", icon: faPython },
+      { name: "C++", icon: faC },
+    ],
+  },
+  {
+    group: "Cloud & Tools",
+    icon: faCloud,
+    items: [
+      { name: "AWS", icon: faAws },
+      { name: "Git", icon: faGitAlt },
+      { name: "Postman", icon: faPaperPlane },
+    ],
+  },
+  {
+    group: "Design",
+    icon: faPalette,
+    items: [
+      { name: "Figma", icon: faFigma },
+      { name: "Canva", icon: faPalette },
+    ],
+  },
 ];
 
 export const certifications: { title: string; issuer: string }[] = [
