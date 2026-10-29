@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
-import { faDownload, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { profile } from "@/data/resume";
+import SocialLinks from "./SocialLinks";
 import Typewriter from "./Typewriter";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -70,22 +70,7 @@ export default function Hero() {
 
           <motion.div {...up(0.85)} className="mt-10 flex items-center gap-3">
             <span className="h-px w-10 bg-orange" />
-            {[
-              { href: profile.github, icon: faGithub, label: "GitHub" },
-              { href: profile.linkedin, icon: faLinkedinIn, label: "LinkedIn" },
-              { href: `mailto:${profile.email}`, icon: faEnvelope, label: "Email" },
-            ].map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target={s.href.startsWith("http") ? "_blank" : undefined}
-                rel="noreferrer"
-                aria-label={s.label}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-line text-white/80 transition-all hover:-translate-y-1 hover:border-orange hover:bg-orange hover:text-white"
-              >
-                <FontAwesomeIcon icon={s.icon} className="h-4 w-4" />
-              </a>
-            ))}
+            <SocialLinks />
           </motion.div>
         </div>
 

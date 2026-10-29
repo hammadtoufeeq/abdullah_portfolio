@@ -8,7 +8,7 @@ import Logo from "./Logo";
 const links = [
   { id: "about", label: "About" },
   { id: "services", label: "Services" },
-  { id: "portfolio", label: "Portfolio" },
+  { id: "portfolio", label: "Projects" },
   { id: "experience", label: "Experience" },
   { id: "certifications", label: "Certifications" },
   { id: "contact", label: "Contact" },

@@ -11,10 +11,12 @@ import Certifications from "@/components/Certifications";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
+import CursorGlow from "@/components/CursorGlow";
 
 export default function Home() {
   return (
     <>
+      <CursorGlow />
       <ScrollProgress />
       <Navbar />
       <main>

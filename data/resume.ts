@@ -5,8 +5,10 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faBitcoin } from "@fortawesome/free-brands-svg-icons";
 import {
-  faAddressBook, faBullhorn, faC, faChartLine, faCloud, faCode, faDatabase, faDumbbell, faFileLines, faLayerGroup,
-  faMobileScreen, faPalette, faPaperPlane, faRobot, faSchool, faServer, faTerminal, faWind, faWrench,
+  faAddressBook, faBrain, faBullhorn, faBullseye, faC, faCalendar, faChartLine, faClipboardCheck, faCloud,
+  faCode, faDatabase, faDumbbell, faFileLines, faFire, faGears, faIdCard, faLaptopCode, faLayerGroup,
+  faListCheck, faLock, faMagnifyingGlass, faMobileScreen, faPalette, faPaperPlane, faRobot, faRocket,
+  faSchool, faServer, faTerminal, faUser, faUsers, faWind, faWrench,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const profile = {
@@ -96,6 +98,10 @@ export type Project = {
   // Optional links — add when available
   live?: string;
   repo?: string;
+  // Showcase slide content (written from the resume's project list — review and edit freely)
+  tagline: string;
+  highlights: { title: string; text: string; icon: IconDefinition }[];
+  flow: string[];
 };
 
 export const projects: Project[] = [
@@ -108,6 +114,16 @@ export const projects: Project[] = [
     description:
       "Analyzes resumes against job descriptions using SBERT semantic embeddings to score fit and highlight missing skills.",
     tech: ["React", "FastAPI", "SQLite", "SBERT", "Tailwind", "Firebase Hosting"],
+    tagline: "Match resumes to jobs by meaning, not keywords.",
+    highlights: [
+      { title: "Semantic matching", text: "SBERT sentence embeddings compare a resume and a job description by meaning, not just keywords.", icon: faBrain },
+      { title: "Fit score & gaps", text: "Scores how well a resume fits the role and highlights the skills that are missing.", icon: faBullseye },
+      { title: "FastAPI backend", text: "A Python FastAPI service runs the analysis and stores results in SQLite.", icon: faServer },
+      { title: "Clean React UI", text: "A responsive React + Tailwind interface to upload, analyze and review results.", icon: faLaptopCode },
+      { title: "Deployed on Firebase", text: "The frontend is hosted on Firebase Hosting for fast global delivery.", icon: faCloud },
+      { title: "Actionable output", text: "Results are presented as clear, readable feedback a candidate can act on.", icon: faListCheck },
+    ],
+    flow: ["Upload resume + job description", "Extract text", "Embed with SBERT", "Compare similarity", "Fit score + missing skills"],
     featured: true,
   },
   {
@@ -119,6 +135,16 @@ export const projects: Project[] = [
     description:
       "A platform connecting brands with influencers, with campaign listings, profiles and a full Express/MongoDB backend.",
     tech: ["React", "Express.js", "Node.js", "MongoDB", "Firebase", "Vercel"],
+    tagline: "Where brands find and work with the right influencers.",
+    highlights: [
+      { title: "Campaign listings", text: "Brands publish campaigns that influencers can browse and respond to.", icon: faBullhorn },
+      { title: "Influencer profiles", text: "Profiles showcase each creator so brands can pick the right fit.", icon: faUser },
+      { title: "REST API", text: "An Express.js + Node.js API powers every screen, backed by MongoDB.", icon: faServer },
+      { title: "Firebase services", text: "Firebase integrates platform services alongside the MERN stack.", icon: faFire },
+      { title: "Deployed on Vercel", text: "Shipped to Vercel with Git-based deployments.", icon: faRocket },
+      { title: "Responsive design", text: "Works smoothly on phones, tablets and desktops.", icon: faMobileScreen },
+    ],
+    flow: ["Brand posts a campaign", "Influencers browse", "Influencer applies", "Brand reviews profiles", "Collaboration starts"],
     featured: true,
   },
   {
@@ -130,6 +156,14 @@ export const projects: Project[] = [
     description:
       "Interactive dashboard for visualizing training data, combining a Flask processing service with a MERN front end.",
     tech: ["React", "Node", "Express", "MongoDB", "Flask", "Tailwind"],
+    tagline: "Turn raw training data into clear, interactive visuals.",
+    highlights: [
+      { title: "Interactive charts", text: "Explore training data visually through an interactive React dashboard.", icon: faChartLine },
+      { title: "Flask processing", text: "A Python Flask service prepares and processes data for visualization.", icon: faGears },
+      { title: "MERN backend", text: "Node.js and Express.js APIs store and serve datasets from MongoDB.", icon: faDatabase },
+      { title: "Tailwind UI", text: "A clean, responsive interface built with Tailwind CSS.", icon: faWind },
+    ],
+    flow: ["Upload dataset", "Flask processes data", "Store in MongoDB", "Express API serves it", "Charts render in React"],
     featured: true,
   },
   {
@@ -141,6 +175,14 @@ export const projects: Project[] = [
     description:
       "Live cryptocurrency price tracker with market data, search and user authentication.",
     tech: ["React", "Node", "Express", "MongoDB", "Firebase"],
+    tagline: "Live cryptocurrency prices at a glance.",
+    highlights: [
+      { title: "Live market data", text: "Tracks current cryptocurrency prices and market movement.", icon: faChartLine },
+      { title: "Quick search", text: "Find any coin fast with instant search.", icon: faMagnifyingGlass },
+      { title: "User authentication", text: "Secure sign-in powered by Firebase.", icon: faLock },
+      { title: "MERN backend", text: "Express.js and Node.js APIs with MongoDB behind the React UI.", icon: faServer },
+    ],
+    flow: ["Fetch market data", "Express API", "React dashboard", "Search coins", "Firebase sign-in"],
   },
   {
     title: "School Management System",
@@ -151,6 +193,14 @@ export const projects: Project[] = [
     description:
       "Manages students, teachers, classes and attendance with role-based dashboards.",
     tech: ["React", "Node", "Express", "MongoDB", "Tailwind"],
+    tagline: "One place for students, teachers, classes and attendance.",
+    highlights: [
+      { title: "Role-based dashboards", text: "Separate views for admins, teachers and students.", icon: faUsers },
+      { title: "Attendance tracking", text: "Teachers mark attendance and everyone sees up-to-date records.", icon: faClipboardCheck },
+      { title: "Class management", text: "Organize classes, subjects and enrollments in one place.", icon: faSchool },
+      { title: "MERN stack", text: "React + Tailwind frontend with an Express/MongoDB REST API.", icon: faLayerGroup },
+    ],
+    flow: ["Admin sets up classes", "Teachers assigned", "Students enrolled", "Attendance marked", "Reports reviewed"],
   },
   {
     title: "Gym Management System",
@@ -161,6 +211,14 @@ export const projects: Project[] = [
     description:
       "Front end for managing gym members, memberships, trainers and schedules.",
     tech: ["React", "Node", "Express", "MongoDB", "CSS"],
+    tagline: "Run members, memberships, trainers and schedules smoothly.",
+    highlights: [
+      { title: "Member management", text: "Keep every member's details and status organized.", icon: faUsers },
+      { title: "Membership plans", text: "Present and manage plans and renewals clearly.", icon: faIdCard },
+      { title: "Trainer schedules", text: "See trainers and class schedules at a glance.", icon: faCalendar },
+      { title: "Responsive UI", text: "A clean front end that works on any screen.", icon: faMobileScreen },
+    ],
+    flow: ["Member signs up", "Chooses a plan", "Trainer assigned", "Sessions scheduled", "Membership tracked"],
   },
   {
     title: "Mechanic Service App",
@@ -171,6 +229,13 @@ export const projects: Project[] = [
     description:
       "Lets customers browse services and book mechanics, with a clean responsive UI.",
     tech: ["React", "Node", "Express", "MongoDB", "CSS"],
+    tagline: "Book a trusted mechanic in a few taps.",
+    highlights: [
+      { title: "Browse services", text: "Customers explore available car services and details.", icon: faWrench },
+      { title: "Easy booking", text: "A simple flow to choose a mechanic and book a slot.", icon: faCalendar },
+      { title: "Responsive UI", text: "Designed to work smoothly on phones and desktops.", icon: faMobileScreen },
+    ],
+    flow: ["Browse services", "Pick a mechanic", "Book a time slot", "Get confirmation", "Service completed"],
   },
 ];
 

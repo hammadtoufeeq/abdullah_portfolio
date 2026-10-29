@@ -85,3 +85,23 @@ html.lenis {
     /* blur comes from Tailwind's backdrop-blur utilities on the element */
   }
 }
+
+/* Orange gradient hairline border (project showcase card) */
+@layer components {
+  .orange-border {
+    isolation: isolate;
+  }
+  .orange-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #ff5b0f, rgba(255, 122, 58, 0.25) 35%, rgba(255, 255, 255, 0.06) 60%, #ff7a3a);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
