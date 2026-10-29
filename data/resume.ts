@@ -88,6 +88,8 @@ export type Project = {
   type: string;
   category: ProjectCategory;
   icon: IconDefinition;
+  // Unsplash photo id (the code at the end of an unsplash.com/photos/... link) used as the card cover
+  image: string;
   description: string;
   tech: string[];
   featured?: boolean;
@@ -99,6 +101,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     title: "AI Resume Analyzer",
+    image: "9si2noVCVH8",
     icon: faFileLines,
     category: "AI",
     type: "AI / Full Stack",
@@ -109,6 +112,7 @@ export const projects: Project[] = [
   },
   {
     title: "Influence Platform",
+    image: "iOVRrjgvQT8",
     icon: faBullhorn,
     category: "Full Stack",
     type: "MERN",
@@ -119,6 +123,7 @@ export const projects: Project[] = [
   },
   {
     title: "DataTrain Visualization",
+    image: "JKUTrJ4vK00",
     icon: faChartLine,
     category: "AI",
     type: "Data / Full Stack",
@@ -129,6 +134,7 @@ export const projects: Project[] = [
   },
   {
     title: "Crypto Prices Web App",
+    image: "ZAIbez5LTrg",
     icon: faBitcoin,
     category: "Full Stack",
     type: "MERN",
@@ -138,6 +144,7 @@ export const projects: Project[] = [
   },
   {
     title: "School Management System",
+    image: "zFSo6bnZJTw",
     icon: faSchool,
     category: "Full Stack",
     type: "MERN",
@@ -147,6 +154,7 @@ export const projects: Project[] = [
   },
   {
     title: "Gym Management System",
+    image: "Il9YbhIBiOA",
     icon: faDumbbell,
     category: "Frontend",
     type: "MERN – Frontend",
@@ -156,6 +164,7 @@ export const projects: Project[] = [
   },
   {
     title: "Mechanic Service App",
+    image: "n99UTGfbvFQ",
     icon: faWrench,
     category: "Frontend",
     type: "MERN – Frontend",
