@@ -1,98 +1,73 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBriefcase, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCodeCommit } from "@fortawesome/free-solid-svg-icons";
 import { experience } from "@/data/resume";
-import FadeIn from "./FadeIn";
+import SectionHeading from "./SectionHeading";
+
+// Stable fake short hash per company, purely decorative
+const hash = (s: string) => {
+  let h = 2166136261;
+  for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  return (h >>> 0).toString(16).padStart(7, "0").slice(0, 7);
+};
 
 export default function Experience() {
-  const [active, setActive] = useState(0);
-  const job = experience[active];
-
   return (
-    <section id="experience" className="bg-ink py-28 text-sand sm:py-36">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <FadeIn className="mb-14">
-          <p className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-terra-soft">
-            <span>02</span>
-            <span className="h-px w-10 bg-terra-soft" />
-            <span>Experience</span>
-          </p>
-          <h2 className="mt-4 font-serif text-4xl font-semibold leading-tight sm:text-6xl">
-            Where I&apos;ve <em className="font-normal text-terra-soft">worked</em>
-          </h2>
-        </FadeIn>
+    <section id="experience" className="border-y border-line bg-bg-deep">
+      <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32">
+        <SectionHeading index="02" file="experience" title="git log --career" />
 
-        <FadeIn delay={0.1} className="grid gap-8 lg:grid-cols-[280px_1fr]">
-          {/* Company tabs */}
-          <div role="tablist" className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0">
-            {experience.map((e, i) => (
-              <button
-                key={e.company}
-                role="tab"
-                aria-selected={active === i}
-                onClick={() => setActive(i)}
-                className={`relative shrink-0 rounded-2xl px-5 py-4 text-left transition-colors duration-300 ${
-                  active === i ? "text-sand" : "text-sand/60 hover:text-sand"
+        <ol className="relative">
+          {/* branch line */}
+          <motion.span
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.4, ease: "easeInOut" }}
+            className="absolute bottom-4 left-[15px] top-4 w-0.5 origin-top bg-gradient-to-b from-mint via-line to-line"
+          />
+          {experience.map((job, i) => (
+            <motion.li
+              key={job.company}
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, delay: i * 0.08 }}
+              className="relative pb-10 pl-12 last:pb-0"
+            >
+              <span
+                className={`absolute left-0 top-1 flex h-8 w-8 items-center justify-center rounded-full border-2 bg-bg-deep ${
+                  job.current ? "border-mint text-mint shadow-[0_0_16px_-2px_#2ee6a6]" : "border-line text-muted"
                 }`}
               >
-                {active === i && (
-                  <motion.span
-                    layoutId="exp-tab"
-                    className="absolute inset-0 rounded-2xl bg-terra"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                  />
-                )}
-                <span className="relative block font-semibold">{e.company}</span>
-                <span className="relative block font-mono text-xs opacity-80">{e.period}</span>
-              </button>
-            ))}
-          </div>
+                <FontAwesomeIcon icon={faCodeCommit} className="h-3.5 w-3.5" />
+              </span>
 
-          {/* Details */}
-          <div className="relative min-h-[300px] rounded-[2rem] bg-sand/5 p-8 ring-1 ring-sand/10 sm:p-10">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={job.company}
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-              >
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-terra text-sand">
-                    <FontAwesomeIcon icon={faBriefcase} />
-                  </span>
+              <div className="group rounded-xl border border-line bg-surface p-6 transition-all duration-300 hover:border-mint/50 hover:shadow-[0_0_40px_-20px_#2ee6a6]">
+                <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+                  <span className="text-mint">commit {hash(job.company)}</span>
                   {job.current && (
-                    <span className="rounded-full bg-sand px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wider text-terra">
-                      Current
-                    </span>
+                    <span className="rounded border border-mint/40 bg-mint/10 px-2 py-0.5 text-mint">HEAD -&gt; main</span>
                   )}
-                </div>
-                <h3 className="mt-6 font-serif text-3xl font-semibold">
-                  {job.role} <span className="italic text-terra-soft">@ {job.company}</span>
+                  <span className="text-muted">{job.period}</span>
+                </p>
+                <h3 className="mt-3 text-xl font-semibold">
+                  {job.role} <span className="font-mono text-mint">@{job.company}</span>
                 </h3>
-                <p className="mt-2 font-mono text-sm text-sand/60">{job.period}</p>
-                <ul className="mt-8 space-y-4">
-                  {job.points.map((p, i) => (
-                    <motion.li
-                      key={p}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 + i * 0.08 }}
-                      className="flex gap-4 leading-relaxed text-sand/85"
-                    >
-                      <FontAwesomeIcon icon={faCircleCheck} className="mt-1 h-4 w-4 shrink-0 text-terra-soft" />
-                      {p}
-                    </motion.li>
+                <ul className="mt-4 space-y-2 font-mono text-sm">
+                  {job.points.map((p) => (
+                    <li key={p} className="flex gap-3 text-muted">
+                      <span className="text-mint">+</span>
+                      <span className="leading-relaxed">{p}</span>
+                    </li>
                   ))}
                 </ul>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </FadeIn>
+              </div>
+            </motion.li>
+          ))}
+        </ol>
       </div>
     </section>
   );

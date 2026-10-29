@@ -26,9 +26,9 @@ export default function Typewriter({ words }: { words: string[] }) {
   }, [text, deleting, i, words]);
 
   return (
-    <span className="text-terra">
+    <span className="text-mint">
       {text}
-      <span className="ml-0.5 inline-block w-[3px] animate-blink bg-terra align-middle" style={{ height: "0.9em" }} />
+      <span className="ml-0.5 inline-block w-[3px] animate-blink bg-mint align-middle" style={{ height: "0.9em" }} />
     </span>
   );
 }

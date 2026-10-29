@@ -1,27 +1,17 @@
 import FadeIn from "./FadeIn";
 
-export default function SectionHeading({
-  index,
-  eyebrow,
-  title,
-  italic,
-  light = false,
-}: {
-  index: string;
-  eyebrow: string;
-  title: string;
-  italic?: string;
-  light?: boolean;
-}) {
+// Code-comment style section title, e.g.  02. // experience  →  git log --career
+export default function SectionHeading({ index, file, title }: { index: string; file: string; title: string }) {
   return (
-    <FadeIn className="mb-14">
-      <p className={`flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] ${light ? "text-sand" : "text-terra"}`}>
-        <span>{index}</span>
-        <span className={`h-px w-10 ${light ? "bg-sand" : "bg-terra"}`} />
-        <span>{eyebrow}</span>
+    <FadeIn className="mb-12">
+      <p className="font-mono text-sm text-muted">
+        <span className="text-mint">{index}.</span> {"// "}
+        {file}
       </p>
-      <h2 className={`mt-4 font-serif text-4xl font-semibold leading-tight sm:text-6xl ${light ? "text-sand" : "text-ink"}`}>
-        {title} {italic && <em className={`font-normal ${light ? "text-sand-dark" : "text-terra"}`}>{italic}</em>}
+      <h2 className="mt-3 flex items-center gap-4 font-mono text-3xl font-bold tracking-tight sm:text-4xl">
+        <span className="text-mint">&gt;</span>
+        {title}
+        <span className="hidden h-px flex-1 bg-gradient-to-r from-line to-transparent sm:block" />
       </h2>
     </FadeIn>
   );

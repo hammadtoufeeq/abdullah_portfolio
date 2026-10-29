@@ -7,6 +7,8 @@ import { faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 import { faCheck, faCopy, faEnvelope, faLocationDot, faPaperPlane, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { profile } from "@/data/resume";
 import FadeIn from "./FadeIn";
+import SectionHeading from "./SectionHeading";
+import Window from "./Window";
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
@@ -21,98 +23,98 @@ export default function Contact() {
     }
   };
 
-  const details = [
-    { icon: faEnvelope, label: profile.email, href: `mailto:${profile.email}` },
-    { icon: faPhone, label: profile.phone, href: `tel:${profile.phone.replace(/\s/g, "")}` },
-    { icon: faLocationDot, label: profile.location },
+  const rows = [
+    { key: "email", icon: faEnvelope, value: profile.email, href: `mailto:${profile.email}` },
+    { key: "phone", icon: faPhone, value: profile.phone, href: `tel:${profile.phone.replace(/\s/g, "")}` },
+    { key: "location", icon: faLocationDot, value: profile.location },
+    { key: "github", icon: faGithub, value: "github", href: profile.github },
+    { key: "linkedin", icon: faLinkedinIn, value: "linkedin", href: profile.linkedin },
   ];
 
   return (
-    <section id="contact" className="px-4 pb-16 sm:px-6">
-      <FadeIn>
-        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] bg-terra px-6 py-20 text-center text-sand sm:px-12 sm:py-28">
-          {/* decorative rings */}
-          <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 animate-spin-slow rounded-full border-2 border-dashed border-sand/20" />
-          <div className="pointer-events-none absolute -bottom-32 -right-20 h-96 w-96 rounded-full border border-sand/15" />
+    <section id="contact" className="relative mx-auto max-w-6xl px-4 pb-28 pt-8 sm:px-6">
+      <SectionHeading index="06" file="contact" title="./contact.sh" />
 
-          <p className="relative font-mono text-xs uppercase tracking-[0.3em] text-sand-dark">06 — What&apos;s next?</p>
-          <h2 className="relative mt-6 font-serif text-5xl font-semibold leading-[1.05] sm:text-7xl">
-            Let&apos;s build something
+      <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+        <FadeIn>
+          <h3 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
+            Got a project or a role?
             <br />
-            <em className="font-normal text-sand-dark">together.</em>
-          </h2>
-          <p className="relative mx-auto mt-6 max-w-xl text-lg text-sand/90">
-            Open to full-time roles, internships and freelance projects. Whether you have a question or just want to say
-            hi, my inbox is always open.
+            <span className="text-mint">Let&apos;s ship it.</span>
+          </h3>
+          <p className="mt-5 max-w-md text-lg text-muted">
+            Open to full-time roles, internships and freelance work. My inbox is always open — I&apos;ll get back to you
+            soon.
           </p>
-
-          <div className="relative mt-10 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <motion.a
-              whileHover={{ scale: 1.04 }}
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               href={`mailto:${profile.email}`}
-              className="inline-flex items-center gap-3 rounded-full bg-sand px-8 py-4 font-semibold text-terra shadow-xl"
+              className="inline-flex items-center gap-2 rounded-md bg-mint px-6 py-3.5 font-mono text-sm font-semibold text-bg-deep shadow-[0_0_30px_-8px_#2ee6a6] transition-colors hover:bg-mint-hover"
             >
-              <FontAwesomeIcon icon={faPaperPlane} /> Say hello
+              <FontAwesomeIcon icon={faPaperPlane} className="h-3.5 w-3.5" /> send_message()
             </motion.a>
             <motion.button
-              whileHover={{ scale: 1.04 }}
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               type="button"
               onClick={copyEmail}
-              className="inline-flex min-w-[170px] items-center justify-center gap-3 rounded-full border-2 border-sand px-6 py-3.5 font-semibold"
+              className="inline-flex min-w-[150px] items-center justify-center rounded-md border border-line bg-surface px-5 py-3.5 font-mono text-sm transition-colors hover:border-mint hover:text-mint"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
-                  key={copied ? "done" : "copy"}
-                  initial={{ opacity: 0, y: 8 }}
+                  key={copied ? "y" : "n"}
+                  initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.15 }}
                   className="flex items-center gap-2"
                 >
-                  <FontAwesomeIcon icon={copied ? faCheck : faCopy} />
-                  {copied ? "Copied!" : "Copy email"}
+                  <FontAwesomeIcon icon={copied ? faCheck : faCopy} className="h-3.5 w-3.5" />
+                  {copied ? "copied!" : "copy email"}
                 </motion.span>
               </AnimatePresence>
             </motion.button>
           </div>
+        </FadeIn>
 
-          <ul className="relative mt-14 flex flex-col items-center justify-center gap-4 text-sm sm:flex-row sm:gap-10">
-            {details.map((d) => (
-              <li key={d.label}>
-                {d.href ? (
-                  <a href={d.href} className="inline-flex items-center gap-2 break-all transition-opacity hover:opacity-75">
-                    <FontAwesomeIcon icon={d.icon} className="text-sand-dark" /> {d.label}
-                  </a>
-                ) : (
-                  <span className="inline-flex items-center gap-2">
-                    <FontAwesomeIcon icon={d.icon} className="text-sand-dark" /> {d.label}
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-
-          <div className="relative mt-8 flex justify-center gap-3">
-            {[
-              { href: profile.github, icon: faGithub, label: "GitHub" },
-              { href: profile.linkedin, icon: faLinkedinIn, label: "LinkedIn" },
-            ].map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={s.label}
-                className="flex h-12 w-12 items-center justify-center rounded-full bg-sand/10 ring-1 ring-sand/30 transition-all duration-300 hover:-translate-y-1 hover:bg-sand hover:text-terra"
-              >
-                <FontAwesomeIcon icon={s.icon} className="h-5 w-5" />
-              </a>
-            ))}
-          </div>
-        </div>
-      </FadeIn>
+        <FadeIn delay={0.15}>
+          <Window title="bash — contact.sh" bodyClassName="p-5 font-mono text-[13px] sm:p-6">
+            <p>
+              <span className="text-mint">➜</span> <span className="text-mint-hover">~</span> ./contact.sh --all
+            </p>
+            <ul className="mt-4 space-y-1">
+              {rows.map((r) => (
+                <li key={r.key}>
+                  {r.href ? (
+                    <a
+                      href={r.href}
+                      target={r.href.startsWith("http") ? "_blank" : undefined}
+                      rel="noreferrer"
+                      className="group flex items-center gap-3 rounded-md px-2 py-2 transition-colors hover:bg-surface"
+                    >
+                      <FontAwesomeIcon icon={r.icon} className="h-4 w-5 text-mint" />
+                      <span className="w-20 shrink-0 text-muted">{r.key}:</span>
+                      <span className="min-w-0 break-all text-fg group-hover:text-mint">{r.value}</span>
+                    </a>
+                  ) : (
+                    <span className="flex items-center gap-3 px-2 py-2">
+                      <FontAwesomeIcon icon={r.icon} className="h-4 w-5 text-mint" />
+                      <span className="w-20 shrink-0 text-muted">{r.key}:</span>
+                      <span className="text-fg">{r.value}</span>
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-muted">
+              <span className="text-mint">➜</span> <span className="text-mint-hover">~</span>{" "}
+              <span className="inline-block h-4 w-2 translate-y-0.5 animate-blink bg-mint" />
+            </p>
+          </Window>
+        </FadeIn>
+      </div>
     </section>
   );
 }

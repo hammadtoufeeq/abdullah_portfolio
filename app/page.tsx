@@ -1,14 +1,14 @@
 import ScrollProgress from "@/components/ScrollProgress";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Marquee from "@/components/Marquee";
+import TechStrip from "@/components/TechStrip";
 import About from "@/components/About";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
 import Credentials from "@/components/Credentials";
 import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
+import StatusBar from "@/components/StatusBar";
 import BackToTop from "@/components/BackToTop";
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Marquee />
+        <TechStrip />
         <About />
         <Experience />
         <Projects />
@@ -26,7 +26,7 @@ export default function Home() {
         <Credentials />
         <Contact />
       </main>
-      <Footer />
+      <StatusBar />
       <BackToTop />
     </>
   );

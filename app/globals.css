@@ -2,68 +2,70 @@
 /* Layered so Tailwind size utilities (h-5, w-5…) can override Font Awesome defaults */
 @import "@fortawesome/fontawesome-svg-core/styles.css" layer(base);
 
-/* Two-tone palette: Terracotta #B5472B + Sand #F3E3C3 (plus tints/shades of each) */
+/* Dark theme: Deep Emerald */
 @theme {
-  --color-terra: #b5472b;
-  --color-terra-deep: #8e3720;
-  --color-terra-soft: #d9826a;
-  --color-sand: #f3e3c3;
-  --color-sand-light: #faf1df;
-  --color-sand-dark: #e5cc9f;
-  --color-ink: #3a1a10;
-  --color-ink-soft: #6e4434;
+  --color-bg: #08120f;
+  --color-bg-deep: #050b09;
+  --color-surface: #10201b;
+  --color-surface-2: #152a23;
+  --color-line: #1d3a31;
+  --color-fg: #e4f2ec;
+  --color-muted: #7fa396;
+  --color-mint: #2ee6a6;
+  --color-mint-hover: #5cf0b8;
 
-  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
-  --animate-marquee: marquee 32s linear infinite;
-  --animate-spin-slow: spin 18s linear infinite;
-  --animate-float: float 5s ease-in-out infinite;
+  --animate-marquee: marquee 40s linear infinite;
   --animate-blink: blink 1s step-end infinite;
+  --animate-float: float 6s ease-in-out infinite;
 
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-  }
   @keyframes blink {
     50% { opacity: 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
   }
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6rem;
+  scroll-padding-top: 5rem;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--color-sand);
-  color: var(--color-ink);
+  background: var(--color-bg);
+  color: var(--color-fg);
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: var(--color-terra);
-  color: var(--color-sand);
+  background: var(--color-mint);
+  color: var(--color-bg-deep);
 }
 
-/* Subtle paper grain on the sand background */
-.grain::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 60;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* Dotted grid used behind the hero */
+.dot-grid {
+  background-image: radial-gradient(rgb(46 230 166 / 0.14) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 75%);
+}
+
+/* Thin themed scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .animate-marquee, .animate-spin-slow, .animate-float { animation: none; }
+  .animate-marquee, .animate-float { animation: none; }
 }

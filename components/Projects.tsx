@@ -4,99 +4,97 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faArrowUpRightFromSquare, faBrain, faCubes, faLayerGroup, faLaptopCode } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUpRightFromSquare, faBookBookmark, faCircle } from "@fortawesome/free-solid-svg-icons";
 import { projects, type ProjectCategory } from "@/data/resume";
-import SectionHeading from "./SectionHeading";
 import FadeIn from "./FadeIn";
+import SectionHeading from "./SectionHeading";
 
-const filters: ("All" | ProjectCategory)[] = ["All", "AI", "Full Stack", "Frontend"];
-const categoryIcon = { AI: faBrain, "Full Stack": faCubes, Frontend: faLaptopCode } as const;
+const filters: ("all" | ProjectCategory)[] = ["all", "AI", "Full Stack", "Frontend"];
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 export default function Projects() {
-  const [filter, setFilter] = useState<(typeof filters)[number]>("All");
-  const shown = projects.filter((p) => filter === "All" || p.category === filter);
+  const [filter, setFilter] = useState<(typeof filters)[number]>("all");
+  const shown = projects.filter((p) => filter === "all" || p.category === filter);
 
   return (
-    <section id="projects" className="mx-auto max-w-6xl px-4 py-28 sm:px-6 sm:py-36">
-      <SectionHeading index="03" eyebrow="Projects" title="Selected" italic="work" />
+    <section id="projects" className="mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32">
+      <SectionHeading index="03" file="projects" title="ls ./repositories" />
 
-      <FadeIn className="mb-10 flex flex-wrap gap-2">
+      <FadeIn className="mb-8 flex flex-wrap items-center gap-2 font-mono text-sm">
+        <span className="mr-1 text-muted">$ filter</span>
         {filters.map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
-            className={`relative rounded-full px-5 py-2.5 text-sm font-medium transition-colors duration-300 ${
-              filter === f ? "text-sand" : "text-ink ring-1 ring-sand-dark hover:text-terra"
+            className={`relative rounded-md border px-3.5 py-1.5 transition-colors duration-200 ${
+              filter === f ? "border-mint text-bg-deep" : "border-line text-muted hover:border-mint/50 hover:text-fg"
             }`}
           >
             {filter === f && (
-              <motion.span layoutId="proj-filter" className="absolute inset-0 rounded-full bg-terra" transition={{ type: "spring", stiffness: 380, damping: 30 }} />
+              <motion.span layoutId="proj-filter" className="absolute inset-0 rounded-[5px] bg-mint" transition={{ type: "spring", stiffness: 420, damping: 32 }} />
             )}
-            <span className="relative flex items-center gap-2">
-              <FontAwesomeIcon icon={f === "All" ? faLayerGroup : categoryIcon[f]} className="h-3.5 w-3.5" />
-              {f}
-            </span>
+            <span className="relative">--{slug(f)}</span>
           </button>
         ))}
+        <span className="ml-auto text-xs text-muted">
+          {shown.length} result{shown.length === 1 ? "" : "s"}
+        </span>
       </FadeIn>
 
-      <motion.div layout className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <motion.div layout className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {shown.map((p) => (
             <motion.article
               layout
               key={p.title}
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.92 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative flex flex-col overflow-hidden rounded-[2rem] bg-sand-light p-7 ring-1 ring-sand-dark transition-shadow duration-500 hover:shadow-[0_30px_50px_-28px_rgba(142,55,32,0.7)]"
+              initial={{ opacity: 0, y: 20, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.94 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -6 }}
+              className="group relative flex flex-col overflow-hidden rounded-xl border border-line bg-surface p-6 transition-[border-color,box-shadow] duration-300 hover:border-mint/60 hover:shadow-[0_0_50px_-24px_#2ee6a6]"
             >
-              {/* terracotta fill that rises on hover */}
-              <span className="absolute inset-x-0 bottom-0 h-0 bg-terra transition-all duration-500 ease-out group-hover:h-full" />
+              {/* top glow line on hover */}
+              <span className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-mint to-transparent transition-transform duration-500 group-hover:scale-x-100" />
 
-              <div className="relative flex items-start justify-between">
-                <span className="font-serif text-5xl font-semibold italic text-terra/25 transition-colors duration-500 group-hover:text-sand/40">
-                  {String(projects.indexOf(p) + 1).padStart(2, "0")}
+              <div className="flex items-center justify-between font-mono text-sm">
+                <span className="flex min-w-0 items-center gap-2 text-mint">
+                  <FontAwesomeIcon icon={faBookBookmark} className="h-4 w-4 shrink-0 text-muted" />
+                  <span className="truncate font-semibold group-hover:underline">{slug(p.title)}</span>
                 </span>
-                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-terra/10 text-terra transition-all duration-500 group-hover:-rotate-45 group-hover:bg-sand">
-                  <FontAwesomeIcon icon={p.live ? faArrowUpRightFromSquare : categoryIcon[p.category]} className="h-4 w-4" />
+                <span className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[11px] text-muted">
+                  {p.featured ? "featured" : "public"}
                 </span>
               </div>
 
-              <p className="relative mt-8 font-mono text-xs uppercase tracking-widest text-terra transition-colors duration-500 group-hover:text-sand-dark">
-                {p.type}
-              </p>
-              <h3 className="relative mt-2 font-serif text-2xl font-semibold transition-colors duration-500 group-hover:text-sand">{p.title}</h3>
-              <p className="relative mt-3 flex-1 text-sm leading-relaxed text-ink-soft transition-colors duration-500 group-hover:text-sand/90">
-                {p.description}
-              </p>
+              <h3 className="mt-4 text-lg font-semibold">{p.title}</h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{p.description}</p>
 
-              <ul className="relative mt-6 flex flex-wrap gap-1.5">
+              <ul className="mt-5 flex flex-wrap gap-1.5">
                 {p.tech.map((t) => (
-                  <li
-                    key={t}
-                    className="rounded-full bg-sand px-2.5 py-1 font-mono text-[11px] text-ink-soft ring-1 ring-sand-dark transition-colors duration-500 group-hover:bg-terra-deep group-hover:text-sand group-hover:ring-sand/20"
-                  >
+                  <li key={t} className="rounded-md bg-mint/10 px-2 py-0.5 font-mono text-[11px] text-mint">
                     {t}
                   </li>
                 ))}
               </ul>
 
-              {(p.repo || p.live) && (
-                <div className="relative mt-6 flex gap-4 text-sm font-medium">
+              <div className="mt-5 flex items-center justify-between border-t border-line pt-4 font-mono text-xs text-muted">
+                <span className="flex items-center gap-1.5">
+                  <FontAwesomeIcon icon={faCircle} className="h-2.5 w-2.5 text-mint" /> {p.type}
+                </span>
+                <span className="flex gap-3">
                   {p.repo && (
-                    <a href={p.repo} target="_blank" rel="noreferrer" className="flex items-center gap-2 group-hover:text-sand">
-                      <FontAwesomeIcon icon={faGithub} /> Code
+                    <a href={p.repo} target="_blank" rel="noreferrer" aria-label={`${p.title} source`} className="hover:text-mint">
+                      <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
                     </a>
                   )}
                   {p.live && (
-                    <a href={p.live} target="_blank" rel="noreferrer" className="flex items-center gap-2 group-hover:text-sand">
-                      <FontAwesomeIcon icon={faArrowUpRightFromSquare} /> Live
+                    <a href={p.live} target="_blank" rel="noreferrer" aria-label={`${p.title} live demo`} className="hover:text-mint">
+                      <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-4 w-4" />
                     </a>
                   )}
-                </div>
-              )}
+                </span>
+              </div>
             </motion.article>
           ))}
         </AnimatePresence>
